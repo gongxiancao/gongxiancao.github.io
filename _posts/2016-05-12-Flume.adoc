@@ -1,6 +1,6 @@
 = Flume 学习笔记
 
-== 上手
+== 引子
 
 （第一篇github博客成功发表，感谢hubpress！）
 
@@ -15,7 +15,7 @@
 
 Flume的作用是收集日志，有各种好处，高可用，可扩展，可靠，高性能，分布式，重要的是，数据写到HDFS，数据分析有着落了。
 
-
+== 正文
 先是Flume的安装，可以参考
 https://dpaynedudhe.wordpress.com/2015/06/16/installing-flume-on-ubuntu/
 
@@ -38,6 +38,8 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
 ```
 bin/flume-ng agent --conf conf --conf-file conf/example.conf --name a1 -Dflume.root.logger=INFO,console
 ```
+然后继续follow的 https://flume.apache.org/FlumeUserGuide.html 上面的指导就可以了。
+
 
 
 
