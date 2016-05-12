@@ -1,0 +1,12 @@
+= Flume 学习笔记
+
+（第一篇github博客成功发表，感谢hubpress！）
+
+缘起：虽然地铁上总是大部分时间都用来看头条，玩游戏，但是微信上的架构师订阅号总能偶尔让人眼前一亮，什么Flume，Kafka，Thrift，ZooKeeper时不时敲打着我的羞耻心、上进心和求知欲。作为我这个级别的人，是不是得看看，混个脸熟？……但也仅仅是脸熟而已。
+直到最近，发现很难躲过去，项目需要处理大量的日志数据，发现几点目前采用的MongoDB MapReduce方案的问题：
+虽然MongoDB的MapReduce虽然能够利用分片位置提高速度，但是需要数据库进程级别的锁，难以在不影响日志写入的情况下，对数据进行分析处理，所以需要拆分。
+但MongoDB的MapReduce要求源数据和输出数据在同一个数据库，要解决数据分析对产品环境的影响，就要求我们数据再存一份数据作为源给MapReduce用。一开始想到的是用副本集解决多份数据的问题，用Primary来接受写入的数据，Secondary来做MapReduce的数据源，但是由于MapReduce要求源数据和输出数据在同一个数据库，“同一个数据库”，意味着要往Secondary写数据，这是MongoDB不允许的。难道要自己写个机制把数据从日志表同步到MapReduce的数据库吗？
+
+
+
+https://flume.apache.org/FlumeUserGuide.html
