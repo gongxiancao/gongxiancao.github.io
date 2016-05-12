@@ -41,5 +41,18 @@ bin/flume-ng agent --conf conf --conf-file conf/example.conf --name a1 -Dflume.r
 然后继续follow的 https://flume.apache.org/FlumeUserGuide.html 上面的指导就可以了。
 
 
+== 第三方插件
+
+插件目录可以加到flume-env.sh中的FLUME_CLASSPATH，或者直接把插件装到plugins.d目录下面。
+每个插件目录可以有三个子目录: lib, libext, native
+
+*Avro RPC*
+
+用下面命令发送日志文件到Flume：
+
+```
+$ bin/flume-ng avro-client -H localhost -p 41414 -c conf -F /usr/logs/log.10
+```
+
 
 
