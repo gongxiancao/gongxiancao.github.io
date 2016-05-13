@@ -59,6 +59,7 @@ nu@node:/usr/lib/flume/apache-flume-1.6.0-bin/conf$ cp flume-env.sh.template flu
 nu@node:/usr/lib/flume/apache-flume-1.6.0-bin/conf$ vi flume-env.sh
 ```
 
+修改flume-env.sh添加：
 ```
 # export JAVA_HOME=/usr/lib/jvm/java-6-sun
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
