@@ -16,6 +16,19 @@
 Flume的作用是收集日志，有各种好处，高可用，可扩展，可靠，高性能，分布式，重要的是，数据写到HDFS，数据分析有着落了。
 
 == 正文
+
+
+=== *安装
+
+==== 安装Java
+
+https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get
+
+==== 安装hadoop
+http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cluster.php
+
+==== 安装Flume
+
 先是Flume的安装，可以参考
 https://dpaynedudhe.wordpress.com/2015/06/16/installing-flume-on-ubuntu/
 
@@ -54,18 +67,6 @@ bin/flume-ng agent --conf conf --conf-file conf/example.conf --name a1 -Dflume.r
 $ bin/flume-ng avro-client -H localhost -p 41414 -c conf -F /usr/logs/log.10
 ```
 
-
-== 安装hadoop
-
-http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cluster.php
-
-安装后需配置：
-
-* ~/.bashrc
-* /usr/local/hadoop/etc/hadoop/hadoop-env.sh
-* /usr/local/hadoop/etc/hadoop/core-site.xml
-* /usr/local/hadoop/etc/hadoop/mapred-site.xml.template
-* /usr/local/hadoop/etc/hadoop/hdfs-site.xml
 
 
 
