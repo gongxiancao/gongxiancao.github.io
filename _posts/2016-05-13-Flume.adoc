@@ -1,0 +1,72 @@
+= Flume 学习笔记
+
+== 引子
+
+（第一篇github博客成功发表，感谢hubpress！）
+
+缘起：虽然地铁上总是大部分时间都用来看头条，玩游戏，但是微信上的架构师订阅号总能偶尔让人眼前一亮，什么Flume，Kafka，Thrift，ZooKeeper时不时敲打着我的羞耻心、上进心和求知欲。作为我这个级别的人，是不是得看看，混个脸熟？……但也仅仅是脸熟而已。
+
+直到最近，发现很难躲过去，项目需要处理大量的日志数据，发现几点目前采用的MongoDB MapReduce方案的问题：
+虽然MongoDB的MapReduce虽然能够利用分片位置提高速度，但是需要数据库进程级别的锁，难以在不影响日志写入的情况下，对数据进行分析处理，所以需要拆分。
+
+但MongoDB的MapReduce要求源数据和输出数据在同一个数据库，要解决数据分析对产品环境的影响，就要求我们数据再存一份数据作为源给MapReduce用。一开始想到的是用副本集解决多份数据的问题，用Primary来接受写入的数据，Secondary来做MapReduce的数据源，但是由于MongoDB MapReduce要求源数据和输出数据在同一个数据库，“同一个数据库”，意味着要往Secondary写数据，这是MongoDB不允许的。难道要自己写个机制把数据从日志表同步到MapReduce的数据库吗？
+
+考虑到MongoDB的写入速度，恐怕用来存储日志不太适合，直到看过更多前辈的文章，发现一般的方案是用Flume。
+
+Flume的作用是收集日志，有各种好处，高可用，可扩展，可靠，高性能，分布式，重要的是，数据写到HDFS，数据分析有着落了。
+
+== 正文
+先是Flume的安装，可以参考
+https://dpaynedudhe.wordpress.com/2015/06/16/installing-flume-on-ubuntu/
+
+然后，参考
+https://flume.apache.org/FlumeUserGuide.html
+进行更深入的了解。这里有一个例子：
+```
+bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console
+```
+如果你在flume conf目录下运行这个命令，他会提示错误：
+```
+Warning: JAVA_HOME is not set!
+Info: Including Hive libraries found via () for Hive access
++ exec /usr/bin/java -Xmx20m -Dflume.root.logger=INFO,console -cp 'conf:/usr/lib/flume/apache-flume-1.6.0-bin/lib/*:/lib/*' -Djava.library.path= org.apache.flume.node.Application --conf-file example.conf --name a1
+log4j:WARN No appenders could be found for logger (org.apache.flume.lifecycle.LifecycleSupervisor).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+```
+即使你把JAVA_HOME设置好，log4j的错误依然还在。后来发现 --conf conf是指定配置文件的目录，所以要让上面的命令运行起来，需要在conf的上一层目录运行命令，并且example.conf要在那个目录下，或者也在conf下，而用下面的命令：
+```
+bin/flume-ng agent --conf conf --conf-file conf/example.conf --name a1 -Dflume.root.logger=INFO,console
+```
+然后继续follow的 https://flume.apache.org/FlumeUserGuide.html 上面的指导就可以了。
+
+
+== 第三方插件
+
+插件目录可以加到flume-env.sh中的FLUME_CLASSPATH，或者直接把插件装到plugins.d目录下面。
+每个插件目录可以有三个子目录: lib, libext, native
+
+*Avro RPC*
+
+用下面命令发送日志文件到Flume：
+
+```
+$ bin/flume-ng avro-client -H localhost -p 41414 -c conf -F /usr/logs/log.10
+```
+
+
+== 安装hadoop
+
+http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cluster.php
+
+安装后需配置：
+
+* ~/.bashrc
+* /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+* /usr/local/hadoop/etc/hadoop/core-site.xml
+* /usr/local/hadoop/etc/hadoop/mapred-site.xml.template
+* /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+
+
+
+
