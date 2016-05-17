@@ -1,0 +1,79 @@
+= Hbase 学习笔记
+
+
+== 安装
+
+
+参考：
+http://www.bogotobogo.com/Hadoop/BigData_hadoop_HBase_Pseudo_Distributed.php
+
+```
+wget http://mirrors.cnnic.cn/apache/hbase/stable/hbase-1.1.5-bin.tar.gz
+tar -zxvf hbase-1.1.5-bin.tar.gz
+sudo mkdir /usr/lib/hbase
+sudo chown hduser:hadoop /usr/lib/hbase
+sudo chmod -R 777 /usr/lib/hbase
+su hduser
+sudo mv hbase-1.1.5 /usr/lib/hbase/
+cd /usr/lib/hbase/hbase-1.1.5
+vi /conf/hbase-env.sh
+```
+添加：
+```
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+```
+```
+vi ~/.bashrc
+```
+```
+#HBASE VARIABLES START
+export HBASE_HOME=/usr/lib/hbase/hbase-1.1.5
+export PATH=$PATH:$HBASE_HOME/bin
+#VARIABLES END
+```
+```
+vi conf/hbase-env.sh
+```
+```
+export HBASE_REGIONSERVERS=${HBASE_HOME}/conf/regionservers
+export HBASE_MANAGES_ZK=true
+```
+
+```
+vi conf/hbase-site.xml
+```
+
+```
+<configuration>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://localhost:54310/hbase</value>
+  </property>
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>localhost</value>
+  </property>
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.clientPort</name>
+    <value>2181</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/home/hduser/hbase/zookeeper</value>
+  </property>
+</configuration>
+```
+
+```
+cd bin
+./start-hbase.sh
+```
+
