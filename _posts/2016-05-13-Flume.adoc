@@ -33,7 +33,7 @@ http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cl
 http://hadooptutorial.info/apache-flume-installation/
 
 ```
-nu@node:~$ wget http://apache.claz.org/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz
+nu@node:~$ wget http://mirror.bit.edu.cn/apache/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz
 nu@node:~$ sudo mkdir /usr/lib/flume
 nu@node:~$ sudo chmod -R 777 /usr/lib/flume
 nu@node:~$ cp apache-flume-1.6.0-bin.tar.gz /usr/lib/flume/
