@@ -27,6 +27,22 @@ https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-w
 ==== 安装hadoop
 http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cluster.php
 
+```
+sudo addgroup hadoop
+sudo adduser --ingroup hadoop hduser
+sudo adduser hduser sudo
+su hduser
+ssh-keygen -t rsa -P ""
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+ssh localhost
+exit
+wget http://mirror.bit.edu.cn/apache/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
+tar xvzf hadoop-2.7.2.tar.gz
+sudo mkdir /usr/lib/hadoop
+sudo mv hadoop-2.7.2 /usr/lib/hadoop/
+sudo chown -R hduser:hadoop /usr/lib/hadoop
+```
+
 ==== 安装Flume
 
 先是Flume的安装，可以参考
@@ -270,7 +286,7 @@ Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.io.SequenceFile$C
 
 谷歌到 http://scu.qfboys.com/blog/storage/flume-hdfs.html ，把各个jar考到flume/lib或加到FLUME_CLASSPATH里。注意由于hadoop版本不同，里面列的几个文件，你的版本里可能不是都有，根据情况选择对应的新版替换掉。对应于我的环境，FLUME_CLASSPATH的设置是：
 ```
-FLUME_CLASSPATH="/usr/local/hadoop/share/hadoop/common/hadoop-common-2.6.0.jar:/usr/local/hadoop/share/hadoop/hdfs/hadoop-hdfs-2.6.0.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-codec-1.4.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-configuration-1.6.jar:/usr/local/hadoop/share/hadoop/common/lib/jets3t-0.9.0.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-httpclient-3.1.jar:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.6.0.jar:/usr/local/hadoop/share/hadoop/common/lib/htrace-core-3.0.4.jar"
+FLUME_CLASSPATH="/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/hadoop-common-2.7.2.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/hdfs/hadoop-hdfs-2.7.2.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/lib/commons-codec-1.4.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/lib/commons-configuration-1.6.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/lib/jets3t-0.9.0.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/lib/commons-httpclient-3.1.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/lib/hadoop-auth-2.7.2.jar:/usr/lib/hadoop/hadoop-2.7.2/share/hadoop/common/lib/htrace-core-3.0.4.jar"
 ```
 要找到你的对应文件的位置，使用find：
 ```
