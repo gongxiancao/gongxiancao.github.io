@@ -1,0 +1,33 @@
+# Nodejs 入门
+
+### 安装
+
+请参阅: https://nodejs.org/en/
+
+
+### Hello World
+请参阅: https://nodejs.org/en/about/
+
+
+
+```
+const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+```
+
+### SailsJs
+项目是代码以及各种配置，二进制文件等的组合，是部署的基本单位。我们不需要自己设计项目结构，可以使用脚手架。sailsjs提供了脚手架，以及数据ORM框架。
+
+
