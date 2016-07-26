@@ -30,4 +30,264 @@ server.listen(port, hostname, () => {
 ### SailsJs
 项目是代码以及各种配置，二进制文件等的组合，是部署的基本单位。我们不需要自己设计项目结构，可以使用脚手架。sailsjs提供了脚手架，以及数据ORM框架。
 
+Sailsjs 官网: http://sailsjs.org/
+
+Github 代码库: https://github.com/balderdashy/sails
+
+Sailsjs ORM框架名称为waterline，参考: https://github.com/balderdashy/waterline-docs
+
+一般简单的数据增删改查不需要手工添加任何服务端代码，可以通过脚手架的命令自动产生。
+
+1.安装sailsjs
+```
+$ npm install sails -g
+```
+2.开始一个新项目
+```
+$ sails new hello-world
+info: Created a new Sails app `hello-world`!
+```
+3.运行
+```
+$ cd hello-world
+$ sails lift
+
+info: Starting app...
+
+info: 
+info: 
+info:    Sails              <|
+info:    v0.10.5             |\
+info:                       /|.\
+info:                      / || \
+info:                    ,'  |'  \
+info:                 .-'.-==|/_--'
+info:                 `--'-------' 
+info:    __---___--___---___--___---___--___
+info:  ____---___--___---___--___---___--___-__
+info: 
+info: Server lifted in `/Users/gongxiancao/project/tmp/hello-world`
+info: To see your app, visit http://localhost:1337
+info: To shut down Sails, press <CTRL> + C at any time.
+
+debug: --------------------------------------------------------
+debug: :: Tue Jul 26 2016 15:42:49 GMT+0800 (CST)
+
+debug: Environment : development
+debug: Port        : 1337
+debug: --------------------------------------------------------
+
+```
+如果你遇到提示：
+```
+ 1. safe  - never auto-migrate my database(s). I will do it myself (by hand) 
+ 2. alter - auto-migrate, but attempt to keep my existing data (experimental)
+ 3. drop  - wipe/drop ALL my data and rebuild models every time I lift Sails
+```
+修改 config/models.js:
+```
+migrate: 'safe'
+```
+
+4.打开浏览器，浏览网址 http://localhost:1337
+
+5.修改页面内容
+views/homepage.ejs:
+```
+<div>
+    Hello World!
+</div>
+```
+刷新浏览器页面，会看到“Hello World”字样。
+
+
+6.添加数据支持
+```
+$ sails generate api user
+info: Created a new api!
+```
+7.打开浏览器访问 http://localhost:1337/user
+页面会显示"[]"，这实际上是添加了一个api。当提交POST请求到该地址时，该api也能创建user。
+
+8.打开views/homepage.ejs，输入下面的内容并保存
+```
+<div>
+    输入你的名字
+    <form method="POST" action="/user">
+        <label>Name:</label>
+        <input type="text" name="name">
+        <input type="submit" title="提交">
+    </form>
+</div>
+```
+在浏览器里打开 http://localhost:1337 随意输入一个名字，点击“提交”，会看到页面地址变成了 http://localhost:1337 ，而页面内容为：
+```
+{
+  "name": "gongxian",
+  "createdAt": "2016-07-26T08:00:34.997Z",
+  "updatedAt": "2016-07-26T08:00:34.997Z",
+  "id": 1
+}
+```
+9.再次访问 http://localhost:1337/user ，可以看到
+```
+[
+  {
+    "name": "gongxian",
+    "createdAt": "2016-07-26T08:00:34.997Z",
+    "updatedAt": "2016-07-26T08:00:34.997Z",
+    "id": 1
+  }
+]
+```
+10.添加前端页面，首先安装前端包管理工具bower
+```
+$ npm install bower -g
+$ bower init
+```
+11.添加Angularjs支持
+关于Angularjs: https://angularjs.org/
+```
+$ bower install angular --save
+$ bower install angular-resource --save
+$ bower install angular-ui-router --save
+```
+12.修改编译选项，使前端资源包含到html中:
+tasks/config/copy.js
+```
+	grunt.config.set('copy', {
+		dev: {
+			files: [{
+				expand: true,
+				cwd: './assets',
+				src: ['**/*.!(coffee|less)'],
+				dest: '.tmp/public'
+			}, {
+				expand: true,
+				cwd: './bower_components',
+				src: [
+					'angular/angular.js',
+					'angular-resource/angular-resource.js',
+					'angular-ui-router/release/angular-ui-router.js'
+				],
+				dest: '.tmp/public/js/dependencies'
+			}]
+		},
+		build: {
+			files: [{
+				expand: true,
+				cwd: '.tmp/public',
+				src: ['**/*'],
+				dest: 'www'
+			}]
+		}
+	});
+```
+tasks/pipeline.js
+```
+var jsFilesToInject = [
+  
+  // Load sails.io before everything else
+  'js/dependencies/sails.io.js',
+
+  // Dependencies like jQuery, or Angular are brought in here
+  'js/dependencies/angular/**/*.js',
+  'js/dependencies/**/*.js',
+
+  // All of the rest of your client-side js files
+  // will be injected here in no particular order.
+  'js/**/*.js'
+];
+
+```
+13.按照angular的方式添加必要的tag:
+views/layout.ejs:
+```
+<!DOCTYPE html>
+<html ng-app="helloWorld">
+```
+views/homepage.ejs:
+```
+<div ui-view></div>
+```
+14.添加前端js代码
+```
+$ mkdir assets/js/app
+$ mkdir assets/js/app/user
+$ mkdir assets/js/common
+$ mkdir assets/js/common/user
+```
+15.添加文件
+assets/js/app/app.js:
+```
+angular.module('helloWorld', [
+  'ui.router',
+  'helloWorld.user'
+])
+.config(function ($locationProvider, $urlRouterProvider, $stateProvider) {
+  $urlRouterProvider
+    .otherwise('/');
+
+  $urlRouterProvider.rule(function ($injector, $location) {
+
+    var path = $location.path();
+    var hasTrailingSlash = path[path.length - 1] === '/';
+
+    if (hasTrailingSlash) {
+
+      //if last charcter is a slash, return the same url without the slash
+      var newPath = path.substr(0, path.length - 1);
+      return newPath;
+    }
+  });
+});
+
+```
+aasets/js/app/user/user.js:
+```
+angular.module('helloWorld.user', ['helloWorld.common.user'])
+.controller('UserListCtrl', function ($scope, User) {
+  $scope.users = User.query();
+});
+
+```
+assets/js/app/user/user.route.js:
+```
+angular.module('helloWorld.user')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('user', {
+        url: '/user',
+        templateUrl: 'templates/user-list.tpl.html',
+        controller: 'UserListCtrl'
+      });
+  });
+```
+assets/js/common/user/user.js:
+```
+angular.module('helloWorld.common.user', ['ngResource'])
+  .factory('User', ['$resource', function ($resource) {
+    return $resource(
+      'user/:id',
+      {id: '@_id'},
+      {
+        'update': { method:'PUT' }
+      }
+    );
+  }]);
+
+```
+assets/templates/user-list.tpl.html:
+```
+<div>
+  <div ng-repeat="user in users">
+    {{user.name}}
+  </div>
+</div>
+```
+17. 重新执行 sails lift，打开浏览器：http://localhost:1337/#/user
+会看到之前添加的用户名称“gongxian”
+
+
+
 
