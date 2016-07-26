@@ -285,7 +285,7 @@ assets/templates/user-list.tpl.html:
   </div>
 </div>
 ```
-17. 重新执行 sails lift，打开浏览器：http://localhost:1337/#/user
+17.重新执行 sails lift，打开浏览器：http://localhost:1337/#/user
 会看到之前添加的用户名称“gongxian”
 
 
