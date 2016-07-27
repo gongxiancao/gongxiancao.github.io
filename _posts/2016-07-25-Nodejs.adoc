@@ -285,9 +285,36 @@ assets/templates/user-list.tpl.html:
   </div>
 </div>
 ```
-17.重新执行 sails lift，打开浏览器：http://localhost:1337/#/user
+16.重新执行 sails lift，打开浏览器：http://localhost:1337/#/user
 会看到之前添加的用户名称“gongxian”
 
+17.最终代码在 https://github.com/gongxiancao/hello-world
+```
+$ git clone https://github.com/gongxiancao/hello-world.git
+$ cd hello-world
+$ npm install
+$ bower install
+$ sails lift
+```
 
+### 可能遇到的问题及解决方案
 
+典型的问题一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 https://www.npmjs.com 搜索)
+
+* 数组操作常用函数库: lodash, underscore
+* 多异步操作完成等待: bluebird, q, async
+* 加盐hash用户密码: bcrypt, bcryptjs
+* 用户认证: passport, passport-http-bearer, passport-http, passport-local
+* 生成token: jwt-simple
+* 二维码: qr-image
+* 数据库: sails-mongo, mongoose, mongodb
+* 任务队列: kue
+* 缓存: cache-manager
+* 文件存储: gridfs-stream
+* 单元测试: mocha
+* Date格式化: moment
+* 发邮件: nodemailer
+* 定时任务: cron
+* benchmark: debug
+* 微服务: seneca, seneca-amqp-transport
 
