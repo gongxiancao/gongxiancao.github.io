@@ -299,7 +299,7 @@ $ sails lift
 
 ### 可能遇到的需求及解决方案
 
-典型的雪球一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 https://www.npmjs.com 搜索)
+典型的需求一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 https://www.npmjs.com 搜索)
 
 * 数组操作常用函数库: lodash, underscore
 * 多异步操作完成等待: bluebird, q, async
@@ -381,7 +381,7 @@ module.exports = {
 ```
 * 如何实现分页？
 
-有服务端分页，和客户端分页，这里只讨论服务端分页。
+有服务端分页和客户端分页，这里只讨论服务端分页。
 ```
 module.exports = {
   find: function (req, res) {
