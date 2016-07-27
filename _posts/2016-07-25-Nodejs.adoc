@@ -299,7 +299,7 @@ $ sails lift
 
 ### 可能遇到的问题及解决方案
 
-典型的问题一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 https://www.npmjs.com 搜索)
+典型的雪球一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 https://www.npmjs.com 搜索)
 
 * 数组操作常用函数库: lodash, underscore
 * 多异步操作完成等待: bluebird, q, async
@@ -317,4 +317,28 @@ $ sails lift
 * 定时任务: cron
 * benchmark: debug
 * 微服务: seneca, seneca-amqp-transport
+* 产品环境运行监控: pm2, forever
+
+其他问题:
+
+* http://localhost:1337/user 是返回用户数据的api，如果要给api的地址加前缀api，变成 http://localhost:1337/api/user 怎么做？
+
+修改 config/blueprints.js
+```
+prefix: '/api',
+```
+修改assets/js/common/user/user.js:
+```
+angular.module('helloWorld.common.user', ['ngResource'])
+  .factory('User', ['$resource', function ($resource) {
+    return $resource(
+      'api/user/:id',
+      {id: '@_id'},
+      {
+        'update': { method:'PUT' }
+      }
+    );
+  }]);
+
+``` 
 
