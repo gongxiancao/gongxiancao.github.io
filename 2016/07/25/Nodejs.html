@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Nodejs 入门</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="//gongxiancao.github.io/themes/Casper/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//gongxiancao.github.io/themes/Casper/assets/css/screen.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="https://gongxiancao.github.io/2016/07/25/Nodejs.html" />
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Nodejs 入门" />
+    <meta property="og:description" content="安装 请参阅: https://nodejs.org/en/ Hello World 请参阅: https://nodejs.org/en/about/ const http = require(&#x27;http&#x27;); const hostname = &#x27;127.0.0.1&#x27;; const port = 3000; const server = http.createServer((req, res) =&amp;gt; {   res.statusCode = 200;   res.setHeader(&#x27;Content-Type&#x27;,..." />
+    <meta property="og:url" content="https://gongxiancao.github.io/2016/07/25/Nodejs.html" />
+    <meta property="article:published_time" content="2016-07-24T16:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-07-27T08:26:08.971Z" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nodejs 入门" />
+    <meta name="twitter:description" content="安装 请参阅: https://nodejs.org/en/ Hello World 请参阅: https://nodejs.org/en/about/ const http = require(&#x27;http&#x27;); const hostname = &#x27;127.0.0.1&#x27;; const port = 3000; const server = http.createServer((req, res) =&amp;gt; {   res.statusCode = 200;   res.setHeader(&#x27;Content-Type&#x27;,..." />
+    <meta name="twitter:url" content="https://gongxiancao.github.io/2016/07/25/Nodejs.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars.githubusercontent.com/u/1942039?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Nodejs 入门",
+    "url": "https://gongxiancao.github.io/2016/07/25/Nodejs.html",
+    "datePublished": "2016-07-24T16:00:00.000Z",
+    "dateModified": "2016-07-27T08:26:08.971Z",
+    "description": "安装 请参阅: https://nodejs.org/en/ Hello World 请参阅: https://nodejs.org/en/about/ const http = require(&#x27;http&#x27;); const hostname = &#x27;127.0.0.1&#x27;; const port = 3000; const server = http.createServer((req, res) =&amp;gt; {   res.statusCode = 200;   res.setHeader(&#x27;Content-Type&#x27;,..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="" href="https://gongxiancao.github.io/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+</head>
+<body class="post-template">
+
+    
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="https://gongxiancao.github.io">Home</a>
+        <!-- <a class="subscribe-button icon-feed" href="https://gongxiancao.github.io/rss/">Subscribe</a> -->
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Nodejs 入门</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-07-25">25 July 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div class="sect2">
+<h3 id="__">安装</h3>
+<div class="paragraph">
+<p>请参阅: <a href="https://nodejs.org/en/" class="bare">https://nodejs.org/en/</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hello_world">Hello World</h3>
+<div class="paragraph">
+<p>请参阅: <a href="https://nodejs.org/en/about/" class="bare">https://nodejs.org/en/about/</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((req, res) =&gt; {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+
+server.listen(port, hostname, () =&gt; {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sailsjs">SailsJs</h3>
+<div class="paragraph">
+<p>项目是代码以及各种配置，二进制文件等的组合，是部署的基本单位。我们不需要自己设计项目结构，可以使用脚手架。sailsjs提供了脚手架，以及数据ORM框架。</p>
+</div>
+<div class="paragraph">
+<p>Sailsjs 官网: <a href="http://sailsjs.org/" class="bare">http://sailsjs.org/</a></p>
+</div>
+<div class="paragraph">
+<p>Github 代码库: <a href="https://github.com/balderdashy/sails" class="bare">https://github.com/balderdashy/sails</a></p>
+</div>
+<div class="paragraph">
+<p>Sailsjs ORM框架名称为waterline，参考: <a href="https://github.com/balderdashy/waterline-docs" class="bare">https://github.com/balderdashy/waterline-docs</a></p>
+</div>
+<div class="paragraph">
+<p>一般简单的数据增删改查不需要手工添加任何服务端代码，可以通过脚手架的命令自动产生。</p>
+</div>
+<div class="paragraph">
+<p>1.安装sailsjs</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ npm install sails -g</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>2.开始一个新项目</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ sails new hello-world
+info: Created a new Sails app `hello-world`!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>3.运行</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ cd hello-world
+$ sails lift
+
+info: Starting app...
+
+info:
+info:
+info:    Sails              &lt;|
+info:    v0.10.5             |\
+info:                       /|.\
+info:                      / || \
+info:                    ,'  |'  \
+info:                 .-'.-==|/_--'
+info:                 `--'-------'
+info:    __---___--___---___--___---___--___
+info:  ____---___--___---___--___---___--___-__
+info:
+info: Server lifted in `/Users/gongxiancao/project/tmp/hello-world`
+info: To see your app, visit http://localhost:1337
+info: To shut down Sails, press &lt;CTRL&gt; + C at any time.
+
+debug: --------------------------------------------------------
+debug: :: Tue Jul 26 2016 15:42:49 GMT+0800 (CST)
+
+debug: Environment : development
+debug: Port        : 1337
+debug: --------------------------------------------------------</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果你遇到提示：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code> 1. safe  - never auto-migrate my database(s). I will do it myself (by hand)
+ 2. alter - auto-migrate, but attempt to keep my existing data (experimental)
+ 3. drop  - wipe/drop ALL my data and rebuild models every time I lift Sails</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>修改 config/models.js:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>migrate: 'safe'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>4.打开浏览器，浏览网址 <a href="http://localhost:1337" class="bare">http://localhost:1337</a></p>
+</div>
+<div class="paragraph">
+<p>5.修改页面内容
+views/homepage.ejs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;div&gt;
+    Hello World!
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>刷新浏览器页面，会看到“Hello World”字样。</p>
+</div>
+<div class="paragraph">
+<p>6.添加数据支持</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ sails generate api user
+info: Created a new api!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>7.打开浏览器访问 <a href="http://localhost:1337/user" class="bare">http://localhost:1337/user</a>
+页面会显示"[]"，这实际上是添加了一个api。当提交POST请求到该地址时，该api也能创建user。</p>
+</div>
+<div class="paragraph">
+<p>8.打开views/homepage.ejs，输入下面的内容并保存</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;div&gt;
+    输入你的名字
+    &lt;form method="POST" action="/user"&gt;
+        &lt;label&gt;Name:&lt;/label&gt;
+        &lt;input type="text" name="name"&gt;
+        &lt;input type="submit" title="提交"&gt;
+    &lt;/form&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在浏览器里打开 <a href="http://localhost:1337" class="bare">http://localhost:1337</a> 随意输入一个名字，点击“提交”，会看到页面地址变成了 <a href="http://localhost:1337" class="bare">http://localhost:1337</a> ，而页面内容为：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{
+  "name": "gongxian",
+  "createdAt": "2016-07-26T08:00:34.997Z",
+  "updatedAt": "2016-07-26T08:00:34.997Z",
+  "id": 1
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>9.再次访问 <a href="http://localhost:1337/user" class="bare">http://localhost:1337/user</a> ，可以看到</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[
+  {
+    "name": "gongxian",
+    "createdAt": "2016-07-26T08:00:34.997Z",
+    "updatedAt": "2016-07-26T08:00:34.997Z",
+    "id": 1
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>10.添加前端页面，首先安装前端包管理工具bower</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ npm install bower -g
+$ bower init</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>11.添加Angularjs支持
+关于Angularjs: <a href="https://angularjs.org/" class="bare">https://angularjs.org/</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ bower install angular --save
+$ bower install angular-resource --save
+$ bower install angular-ui-router --save</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>12.修改编译选项，使前端资源包含到html中:
+tasks/config/copy.js</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>	grunt.config.set('copy', {
+		dev: {
+			files: [{
+				expand: true,
+				cwd: './assets',
+				src: ['**/*.!(coffee|less)'],
+				dest: '.tmp/public'
+			}, {
+				expand: true,
+				cwd: './bower_components',
+				src: [
+					'angular/angular.js',
+					'angular-resource/angular-resource.js',
+					'angular-ui-router/release/angular-ui-router.js'
+				],
+				dest: '.tmp/public/js/dependencies'
+			}]
+		},
+		build: {
+			files: [{
+				expand: true,
+				cwd: '.tmp/public',
+				src: ['**/*'],
+				dest: 'www'
+			}]
+		}
+	});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>tasks/pipeline.js</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>var jsFilesToInject = [
+
+  // Load sails.io before everything else
+  'js/dependencies/sails.io.js',
+
+  // Dependencies like jQuery, or Angular are brought in here
+  'js/dependencies/angular/**/*.js',
+  'js/dependencies/**/*.js',
+
+  // All of the rest of your client-side js files
+  // will be injected here in no particular order.
+  'js/**/*.js'
+];</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>13.按照angular的方式添加必要的tag:
+views/layout.ejs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html ng-app="helloWorld"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>views/homepage.ejs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;div ui-view&gt;&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>14.添加前端js代码</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ mkdir assets/js/app
+$ mkdir assets/js/app/user
+$ mkdir assets/js/common
+$ mkdir assets/js/common/user</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>15.添加文件
+assets/js/app/app.js:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>angular.module('helloWorld', [
+  'ui.router',
+  'helloWorld.user'
+])
+.config(function ($locationProvider, $urlRouterProvider, $stateProvider) {
+  $urlRouterProvider
+    .otherwise('/');
+
+  $urlRouterProvider.rule(function ($injector, $location) {
+
+    var path = $location.path();
+    var hasTrailingSlash = path[path.length - 1] === '/';
+
+    if (hasTrailingSlash) {
+
+      //if last charcter is a slash, return the same url without the slash
+      var newPath = path.substr(0, path.length - 1);
+      return newPath;
+    }
+  });
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>aasets/js/app/user/user.js:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>angular.module('helloWorld.user', ['helloWorld.common.user'])
+.controller('UserListCtrl', function ($scope, User) {
+  $scope.users = User.query();
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>assets/js/app/user/user.route.js:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>angular.module('helloWorld.user')
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('user', {
+        url: '/user',
+        templateUrl: 'templates/user-list.tpl.html',
+        controller: 'UserListCtrl'
+      });
+  });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>assets/js/common/user/user.js:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>angular.module('helloWorld.common.user', ['ngResource'])
+  .factory('User', ['$resource', function ($resource) {
+    return $resource(
+      'user/:id',
+      {id: '@_id'},
+      {
+        'update': { method:'PUT' }
+      }
+    );
+  }]);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>assets/templates/user-list.tpl.html:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;div&gt;
+  &lt;div ng-repeat="user in users"&gt;
+    {{user.name}}
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>16.重新执行 sails lift，打开浏览器：http://localhost:1337/#/user
+会看到之前添加的用户名称“gongxian”</p>
+</div>
+<div class="paragraph">
+<p>17.最终代码在 <a href="https://github.com/gongxiancao/hello-world" class="bare">https://github.com/gongxiancao/hello-world</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ git clone https://github.com/gongxiancao/hello-world.git
+$ cd hello-world
+$ npm install
+$ bower install
+$ sails lift</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">可能遇到的问题及解决方案</h3>
+<div class="paragraph">
+<p>典型的问题一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 <a href="https://www.npmjs.com" class="bare">https://www.npmjs.com</a> 搜索)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>数组操作常用函数库: lodash, underscore</p>
+</li>
+<li>
+<p>多异步操作完成等待: bluebird, q, async</p>
+</li>
+<li>
+<p>加盐hash用户密码: bcrypt, bcryptjs</p>
+</li>
+<li>
+<p>用户认证: passport, passport-http-bearer, passport-http, passport-local</p>
+</li>
+<li>
+<p>生成token: jwt-simple</p>
+</li>
+<li>
+<p>二维码: qr-image</p>
+</li>
+<li>
+<p>数据库: sails-mongo, mongoose, mongodb</p>
+</li>
+<li>
+<p>任务队列: kue</p>
+</li>
+<li>
+<p>缓存: cache-manager</p>
+</li>
+<li>
+<p>文件存储: gridfs-stream</p>
+</li>
+<li>
+<p>单元测试: mocha</p>
+</li>
+<li>
+<p>Date格式化: moment</p>
+</li>
+<li>
+<p>发邮件: nodemailer</p>
+</li>
+<li>
+<p>定时任务: cron</p>
+</li>
+<li>
+<p>benchmark: debug</p>
+</li>
+<li>
+<p>微服务: seneca, seneca-amqp-transport</p>
+</li>
+</ul>
+</div>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="" style="background-image: url(https://avatars.githubusercontent.com/u/1942039?v=3)"><span class="hidden">'s Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href=""></a></h4>
+
+                    <p>Read <a href="">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Nodejs%20%E5%85%A5%E9%97%A8&amp;url=https://gongxiancao.github.io/2016/07/25/Nodejs.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://gongxiancao.github.io/2016/07/25/Nodejs.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://gongxiancao.github.io/2016/07/25/Nodejs.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="https://gongxiancao.github.io"></a> &copy; 2016</section>
+        <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+    </footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//gongxiancao.github.io/themes/Casper/assets/js/jquery.fitvids.js?v=1.0.0"></script>
+    <script type="text/javascript" src="//gongxiancao.github.io/themes/Casper/assets/js/index.js?v=1.0.0"></script>
+
+</body>
+</html>
