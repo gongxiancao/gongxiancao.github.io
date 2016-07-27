@@ -297,7 +297,7 @@ $ bower install
 $ sails lift
 ```
 
-### 可能遇到的问题及解决方案
+### 可能遇到的需求及解决方案
 
 典型的雪球一般都有现成的第三方nodejs/npm包。下面是常见需求及npm包(可以到 https://www.npmjs.com 搜索)
 
@@ -316,10 +316,11 @@ $ sails lift
 * 发邮件: nodemailer
 * 定时任务: cron
 * benchmark: debug
+* 调用其他服务器的Api: request
 * 微服务: seneca, seneca-amqp-transport
 * 产品环境运行监控: pm2, forever
 
-其他问题:
+### 其他问题
 
 * http://localhost:1337/user 是返回用户数据的api，如果要给api的地址加前缀api，变成 http://localhost:1337/api/user 怎么做？
 
@@ -342,3 +343,76 @@ angular.module('helloWorld.common.user', ['ngResource'])
 
 ``` 
 
+* 如何添加自定义api？
+
+修改 api/controllers/UserController.js
+```
+module.exports = {
+  find: function (req, res) {
+    res.json([1]);
+  }
+};
+```
+* 不想使用自动生成的Api，因为那样等于把数据库直接暴露了，怎么禁用?
+
+修改 config/blueprints.js
+```
+actions: false,
+rest: false,
+```
+修改 config/routes.js
+```
+'get /api/user': 'UserController.find'
+```
+* 典型的Api代码是怎样的？
+
+```
+module.exports = {
+  find: function (req, res) {
+    User.find({})
+      .then(function (users) {
+        res.json(users);
+      })
+      .catch(function (err) {
+        res.status(400).json({errmsg: 'db error', errcode: 1000});
+      });
+  }
+};
+```
+* 如何实现分页？
+
+有服务端分页，和客户端分页，这里只讨论服务端分页。
+```
+module.exports = {
+  find: function (req, res) {
+    var page = parseInt(req.query.page) || 1;
+    var perPage = parseInt(req.query.perPage) || 10;
+    User.count({})
+      .then(function (count) {
+        return [
+          count,
+          User.find({})
+            .skip(perPage * (page - 1))
+            .limit(perPage)
+        ];
+      })
+      .spread(function (count, users) {
+        res.set('x-total', count);
+        res.json(users);
+      })
+      .catch(function (err) {
+        res.status(400).json({errmsg: 'db error', errcode: 1000});
+      });
+
+  }
+};
+```
+在前端
+```
+$scope.users = User.query({page: 1, perPage: 10}, function (result, headers) {
+    $scope.total = parseInt(headers('x-total'));
+  });
+```
+* 怎么调试？
+
+推荐使用Visual Studio Code
