@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Nodejs项目中使用CDN</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="//gongxiancao.github.io/themes/Casper/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//gongxiancao.github.io/themes/Casper/assets/css/screen.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html" />
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Nodejs项目中使用CDN" />
+    <meta property="og:description" content="首先了解一下CDN原理。 在没有使用CDN时，请求大致经过一下步骤： 客户端得到资源网址 请求本地DNS服务器（如电信DNS服务器）解析域名 经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析） 服务端（阿里云云解析）解析到具体IP返回 客户端得到IP，发送资源请求 使用CDN后，步骤变为 客户端得到资源网址 请求本地DNS服务器（如电信DNS服务器）解析域名 经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析） 服务端DNS服务器根据客户端IP返回与其较近的CDN节点IP 客户端得到IP，发送资源请求 CD..." />
+    <meta property="og:url" content="https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html" />
+    <meta property="article:published_time" content="2016-07-28T16:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-07-29T09:26:17.081Z" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nodejs项目中使用CDN" />
+    <meta name="twitter:description" content="首先了解一下CDN原理。 在没有使用CDN时，请求大致经过一下步骤： 客户端得到资源网址 请求本地DNS服务器（如电信DNS服务器）解析域名 经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析） 服务端（阿里云云解析）解析到具体IP返回 客户端得到IP，发送资源请求 使用CDN后，步骤变为 客户端得到资源网址 请求本地DNS服务器（如电信DNS服务器）解析域名 经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析） 服务端DNS服务器根据客户端IP返回与其较近的CDN节点IP 客户端得到IP，发送资源请求 CD..." />
+    <meta name="twitter:url" content="https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars.githubusercontent.com/u/1942039?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Nodejs项目中使用CDN",
+    "url": "https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html",
+    "datePublished": "2016-07-28T16:00:00.000Z",
+    "dateModified": "2016-07-29T09:26:17.081Z",
+    "description": "首先了解一下CDN原理。 在没有使用CDN时，请求大致经过一下步骤： 客户端得到资源网址 请求本地DNS服务器（如电信DNS服务器）解析域名 经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析） 服务端（阿里云云解析）解析到具体IP返回 客户端得到IP，发送资源请求 使用CDN后，步骤变为 客户端得到资源网址 请求本地DNS服务器（如电信DNS服务器）解析域名 经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析） 服务端DNS服务器根据客户端IP返回与其较近的CDN节点IP 客户端得到IP，发送资源请求 CD..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="" href="https://gongxiancao.github.io/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+</head>
+<body class="post-template">
+
+    
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="https://gongxiancao.github.io">Home</a>
+        <!-- <a class="subscribe-button icon-feed" href="https://gongxiancao.github.io/rss/">Subscribe</a> -->
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Nodejs项目中使用CDN</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-07-29">29 July 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>首先了解一下CDN原理。
+在没有使用CDN时，请求大致经过一下步骤：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>客户端得到资源网址</p>
+</li>
+<li>
+<p>请求本地DNS服务器（如电信DNS服务器）解析域名</p>
+</li>
+<li>
+<p>经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析）</p>
+</li>
+<li>
+<p>服务端（阿里云云解析）解析到具体IP返回</p>
+</li>
+<li>
+<p>客户端得到IP，发送资源请求</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>使用CDN后，步骤变为</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>客户端得到资源网址</p>
+</li>
+<li>
+<p>请求本地DNS服务器（如电信DNS服务器）解析域名</p>
+</li>
+<li>
+<p>经顶级DNS服务器将解析请求转由服务端DNS服务器处理 （如阿里云云解析）</p>
+</li>
+<li>
+<p>服务端DNS服务器根据客户端IP返回与其较近的CDN节点IP</p>
+</li>
+<li>
+<p>客户端得到IP，发送资源请求</p>
+</li>
+<li>
+<p>CDN节点收到请求，如果资源缓存存在且未过期，返回资源。如果没有资源缓存或者已过期，则访问源站点（CDN服务商处配置的源站信息，如七牛可配置为其对象存储空间）请求资源并缓存，而后返回资源</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__cdn">使用七牛存储空间融合CDN的步骤</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>添加对象存储空间</p>
+</li>
+<li>
+<p>点击“融合CDN加速域名”</p>
+</li>
+<li>
+<p>填写加速域名：cdn.abc.com，填写备案号</p>
+</li>
+<li>
+<p>创建</p>
+</li>
+<li>
+<p>等待一天后，会给出CNAME</p>
+</li>
+<li>
+<p>到阿里云云解析后台添加一条解析CNAME记录，把cdn解析到七牛给出的CNAME</p>
+</li>
+<li>
+<p>在七牛对象存储空间里上传一张图片，可以通过 cdn.abc.com/efg.jpg访问到图片。</p>
+</li>
+<li>
+<p>可以ping cdn.abc.com，会看到解析到的ip对应域名为CDN节点</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>当然，不使用七牛CDN的情况下，设置CDN很容易，但是我们的需要七牛的存储空间，这样需要解决更多的问题。页面里的资源网址默认为当前域名下的网址，而我们只是使用七牛存储资源，而其他请求仍然不希望发送到七牛。因此需要在页面里使用资源的绝对路径。实际情况变成：页面域名为www.abc.com，图片链接则为 cdn.abc.com/images/xxx.jpg，而在由于可能存在不同的环境，所以，会出现在stage环境图片链接为 cdn.stage.abc.com/images/xxx.jpg,在产品环境则为 cdn.abc.com/images/xxx.jpg。这就要求一种相对智能的部署过程，能够把地址自动改为对应环境的CDN地址。</p>
+</div>
+<div class="paragraph">
+<p>gulp-cdnizer是一个修改.html/.js/.css文件中的链接地址的gulp插件。你通过类似如下配置，自动根据环境修改链接地址:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>gulp.task('cdnizer', function () {
+  return merge(
+    gulp.src(['.tmp/public/js/**/*.js'])
+      .pipe(plugins.cdnizer({
+        defaultCDNBase: gulpConfig.cdn[environment],
+        allowRev: true,
+        allowMin: true,
+        matchers: [
+          {
+            pattern: /(&lt;img\s.*?src=\\["'])(.+?)(\\["'].*?&gt;)/gi,
+            fallback: true
+          }
+        ],
+        files: gulpConfig.cdnizer.files
+      }))
+      .pipe(gulp.dest('.tmp/public/js')),
+    gulp.src(['.tmp/public/styles/**/*.css'])
+      .pipe(plugins.cdnizer({
+        defaultCDNBase: gulpConfig.cdn[environment],
+        allowRev: true,
+        allowMin: true,
+        files: gulpConfig.cdnizer.files
+      }))
+      .pipe(gulp.dest('.tmp/public/styles')),
+    gulp.src(['.tmp/public/index.html'])
+      .pipe(plugins.cdnizer({
+        defaultCDNBase: gulpConfig.cdn[environment],
+        allowRev: true,
+        allowMin: true,
+        files: gulpConfig.cdnizer.files
+      }))
+      .pipe(gulp.dest('.tmp/public'))
+    );
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果你使用七牛的对象存储空间，你可以使用gulp-qiniu在部署的时候自动上传文件到七牛:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>gulp.task('cdn', function (done) {
+  gulp.src(gulpConfig.tmp.distAssets)
+    .pipe(plugins.qiniu({
+      accessKey: gulpConfig.qiniu.accessKey,
+      secretKey: gulpConfig.qiniu.secretKey,
+      bucket: gulpConfig.qiniu.bucket[environment],
+      private: false
+    }, {
+      dir: 'console',
+      versioning: false,
+      concurrent: 10
+    }));
+
+  setTimeout(done, 10000); // 前面加return不work，所以在这儿等着
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这样站点支持CDN的改造工作就算基本完成了。</p>
+</div>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="" style="background-image: url(https://avatars.githubusercontent.com/u/1942039?v=3)"><span class="hidden">'s Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href=""></a></h4>
+
+                    <p>Read <a href="">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Nodejs%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8CDN&amp;url=https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://gongxiancao.github.io/2016/07/29/Nodejs-C-D-N.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="https://gongxiancao.github.io"></a> &copy; 2016</section>
+        <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+    </footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//gongxiancao.github.io/themes/Casper/assets/js/jquery.fitvids.js?v=1.0.0"></script>
+    <script type="text/javascript" src="//gongxiancao.github.io/themes/Casper/assets/js/index.js?v=1.0.0"></script>
+
+</body>
+</html>
