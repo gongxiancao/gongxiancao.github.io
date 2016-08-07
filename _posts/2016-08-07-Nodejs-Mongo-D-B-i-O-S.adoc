@@ -36,9 +36,9 @@ $ node app.js
 
 * 点击“＋”添加用户：
 
-![user list](https://raw.githubusercontent.com/gongxiancao/node-mongodb-ios-sample/master/docs/user-list.png)
+image:https://raw.githubusercontent.com/gongxiancao/node-mongodb-ios-sample/master/docs/user-list.png[user list]
 
-* 输入用户名，邮箱，点击保存：
+* 输入用户名，邮箱，点击“Save”：
 
-![user details](https://raw.githubusercontent.com/gongxiancao/node-mongodb-ios-sample/master/docs/user-details.png)
+image:https://raw.githubusercontent.com/gongxiancao/node-mongodb-ios-sample/master/docs/user-details.png[user details]
 
