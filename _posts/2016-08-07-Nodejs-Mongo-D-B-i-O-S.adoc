@@ -1,0 +1,44 @@
+# Nodejs + MongoDB + iOS 示例
+
+## 安装MongoDB
+OS X安装参考： https://docs.mongodb.com/master/tutorial/install-mongodb-on-os-x/?_ga=1.115245698.428811273.1398758017
+
+步骤1. 
+```
+$ brew update
+```
+
+步骤2.
+```
+$ brew install mongodb
+```
+
+## 下载示例代码
+```
+$ git clone https://github.com/gongxiancao/node-mongodb-ios-sample.git
+```
+
+## 安装项目依赖
+```
+$ cd node-mongodb-ios-sample
+$ cd server
+$ npm install
+```
+
+## 运行服务器
+```
+$ node app.js
+```
+
+## 运行iOS client项目
+用Xcode打开client/client.xcodeproj，选择iPhone 6s Plus模拟器，启动项目。
+
+
+* 点击“＋”添加用户：
+
+![user list](https://raw.githubusercontent.com/gongxiancao/node-mongodb-ios-sample/master/docs/user-list.png)
+
+* 输入用户名，邮箱，点击保存：
+
+![user details](https://raw.githubusercontent.com/gongxiancao/node-mongodb-ios-sample/master/docs/user-details.png)
+
