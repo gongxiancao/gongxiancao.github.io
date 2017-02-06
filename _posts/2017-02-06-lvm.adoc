@@ -1,0 +1,33 @@
+# 安装 lvm
+## 安装 lvm
+
+```
+sudo apt-get -y install lvm2
+
+sudo fdisk -l
+
+sudo pvscan
+
+sudo pvcreate /dev/xvdb
+
+sudo pvdisplay
+
+sudo vgcreate -s 16m ingvg /dev/xvdb
+
+sudo vgscan
+
+sudo pvscan
+
+sudo vgdisplay
+
+sudo lvcreate -l 3199 -n inglv ingvg
+
+sudo mkfs -t ext4 /dev/ingvg/inglv
+
+sudo sudo -i blkid
+
+sudo vi /etc/fstab
+
+# /dev/mapper/ingvg-inglv /data ext4 errors=remount-ro 0 1
+UUID=050c8adf-7d5a-415b-a5f5-85ba7f635b17  /data   ext4  defaults,nofail   1   2
+```
