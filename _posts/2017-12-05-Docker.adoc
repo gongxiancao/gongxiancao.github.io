@@ -1,0 +1,33 @@
+# Docker 环境设置及布署
+
+### 镜像
+可使用daocloud.io的镜像，加速image的安装
+
+### 私有镜像仓库
+可使用阿里云的容器服务
+
+### 布署至windows7
+1. 安装Docker Toolbox
+2. 从私有镜像仓库拉image
+3. 运行
+
+### 在windows7 环境把Docker容器设置为开机运行
+1. 创建两个脚本文件：
+   run.sh
+   
+```
+   docker run -d -it --rm --name iceason-face-detect \
+-e NODE_ENV='iceason' \
+ 5e0758bfd0ee
+```
+   
+start.bat
+ 
+```
+   cd "C:\Program Files\Docker Toolbox"
+"C:\Program Files\Git\bin\bash.exe" --login -i "C:\Program Files\Docker Toolbox\start.sh" C:/Users/Admin/demo-envs/iceason/FaceDetect/run.sh
+
+```
+   
+2. 创建start.bat快捷方式，并放到启动目录里
+
