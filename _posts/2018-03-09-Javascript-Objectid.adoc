@@ -1,0 +1,19 @@
+# 为Javascript Object添加唯一id
+
+https://stackoverflow.com/questions/2020670/javascript-object-id
+
+```
+(function() {
+    var id = 0;
+
+    function generateId() { return id++; };
+
+    Object.prototype.id = function() {
+        var newId = generateId();
+
+        this.id = function() { return newId; };
+
+        return newId;
+    };
+})();
+```
